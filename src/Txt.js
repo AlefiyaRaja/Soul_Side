@@ -1,21 +1,22 @@
-import {StyleSheet, Text, View} from 'react-native';
+
+
+import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
-export default function Txt() {
+const Txt = (props)=> {
   return (
     <View>
       <View style={styles.text1Container}>
-        <Text style={styles.text1}>New Here?</Text>
+        <Text style={styles.text1}>{props.content}</Text>
       </View>
       <View style={styles.text2Container}>
-        <Text style={styles.text2}>
-          Welcome! Our weekly prompts are here to spark self-reflection and
-          conversation for all members. They're all about you and your needs.
-        </Text>
+        <Text style={styles.text2}>{props.content}</Text>
       </View>
     </View>
   );
-}
+};
+
+export default Txt;
 
 const styles = StyleSheet.create({
   text1Container: {

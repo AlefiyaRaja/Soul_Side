@@ -1,35 +1,81 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Modal, Image} from 'react-native';
-// import {styles} from './styles';
-import ImagePath from './ImagePath';
+import {View, Modal, Image, Text} from 'react-native';
+import {styles} from './styles';
 import Btn from './Btn';
-import Txt from './Txt';
 
-const ModalComponent = () => {
-  const [isVisible, setIsVisible] = React.useState(false);
-
-  const toggleModal = () => {
-    setIsVisible(!isVisible);
-  };
-
+const ModalComponent = ({
+  isVisible,
+  toggleModal,
+  imageData,
+  text1,
+  text2,
+  text3,
+  text4,
+  modalaboutContainer,
+  txtStyle1,
+  txtStyle2,
+  txtStyle3,
+  txtStyle4,
+  modalContainer,
+  rectangle,
+  bgTxt,
+  lineImage,
+  aboutImage,
+  writeImage,
+  line,
+  about,
+  write,
+  bigRectangle,
+  contentTxt,
+  letsButton,
+  letsButtonStyle,
+}) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={toggleModal}>
-        <Text>Show Modal</Text>
-      </TouchableOpacity>
       <Modal
         visible={isVisible}
         transparent
         animationType="fade"
         animationDuration={1500}
         onRequestClose={toggleModal}>
-        <View style={styles.modalContainer}>
-          <View style={styles.rectangle}>
-            <Image source={ImagePath.Line} style={styles.image1} />
-            <Image source={ImagePath.smile} style={styles.image2} />
+        <View style={modalContainer}>
+          <View style={[rectangle, bigRectangle]}>
+            {/* {imageData.map((image, index) => (
+              <View key={index} style={[styles.imageContainer]}>
+                <Image source={image.source} style={styles.icons} />
+                </View>
+            ))} */}
 
-            <Txt />
-            <Btn />
+            <View style={[styles.imageContainer, lineImage]}>
+              <Image source={line} style={styles.icons} />
+            </View>
+            <View style={[styles.imageContainer, aboutImage]}>
+              <Image source={write} style={styles.icons} />
+            </View>
+            <View style={[styles.imageContainer, writeImage]}>
+              <Image source={about} style={styles.icons} />
+            </View>
+
+            <View style={modalaboutContainer}>
+              <Text style={txtStyle1}>{text1}</Text>
+              <Text style={txtStyle2}>{text2}</Text>
+            </View>
+            <View style={bgTxt}>
+              <Text style={txtStyle3}>{text3}</Text>
+            </View>
+            <View style={contentTxt}>
+              <Text style={txtStyle4}>{text4}</Text>
+            </View>
+            <View style={letsButtonStyle}>
+              {letsButton && (
+                <Btn
+                  label="let's do it"
+                  onPress={() => {
+                    console.log('lets do it');
+                  }}
+                />
+              )}
+            </View>
           </View>
         </View>
       </Modal>
@@ -38,39 +84,3 @@ const ModalComponent = () => {
 };
 
 export default ModalComponent;
-
-export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  rectangle: {
-    width: 420,
-    height: 305,
-    borderRadius: 50,
-    backgroundColor: '#FFFFFF',
-    borderBottomEndRadius: 0,
-    borderBottomLeftRadius: 0,
-  },
-  image1: {
-    width: 60,
-    height: 5,
-    position: 'absolute',
-    top: 8,
-    left: 175,
-  },
-
-  image2: {
-    width: 80,
-    height: 82,
-    position: 'absolute',
-    top: 25,
-    left: 167,
-  },
-});

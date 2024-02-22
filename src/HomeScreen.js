@@ -1,23 +1,154 @@
-import React from 'react';
-import {View, StyleSheet, Text, Image} from 'react-native';
+import React, {useState} from 'react';
+import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import ImagePath from './ImagePath';
 import Btn from './Btn';
+import ModalComponent from './Modal';
 
 export default function HomeScreen() {
   const handlePress = () => {
     console.log('Add to calendar');
   };
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
+
+  const [isGroupModalVisible, setIsGroupModalVisible] = useState(false);
+
+  const toggleGroupModal = () => {
+    setIsGroupModalVisible(!isGroupModalVisible);
+  };
+
+  const modalaboutContainer = {
+    width: 230,
+    height: 150,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'column',
+    lineHeight: 20,
+  };
+
+  const txtStyle1 = {
+    fontSize: 22,
+    fontWeight: '500',
+    font: 'Inter',
+    color: ' #646464 ',
+    top: 10,
+  };
+  const txtStyle2 = {
+    fontSize: 22,
+    fontWeight: '500',
+    font: 'Inter',
+    color: ' #646464 ',
+    top: 30,
+    left: 10,
+  };
+  const txtStyle3 = {
+    font: 'Inter',
+    fontWeight: '700',
+    fontSize: 18,
+    color: '#4D4D4D',
+
+    lineHeight: 22,
+  };
+
+  const txtStyle4 = {
+    fontFamily: 'Inter',
+    fontSize: 12,
+    fontWeight: '600',
+    lineHeight: 18,
+    letterSpacing: 0,
+    textAlign: 'center',
+    color: '#666666',
+  };
+  const bgTxt = {
+    justifyContent: 'center',
+    alignItems: 'center',
+  };
+
+  const contentTxt = {
+    width: 365,
+    height: 210,
+    marginLeft: 25,
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: 0,
+    top: 0,
+  };
+
+  const modalContainer = {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  };
+
+  const rectangle = {
+    width: 420,
+    height: 165,
+    borderRadius: 50,
+    backgroundColor: '#FFFFFF',
+    borderBottomEndRadius: 0,
+    borderBottomLeftRadius: 0,
+  };
+
+  const bigRectangle = {
+    width: 420,
+    height: 225,
+    borderRadius: 50,
+    backgroundColor: '#FFFFFF',
+    borderBottomEndRadius: 0,
+    borderBottomLeftRadius: 0,
+  };
+
+  const lineImage = {
+    height: 5,
+    top: 8,
+    left: 175,
+  };
+
+  const aboutImage = {
+    left: 40,
+    top: 50,
+  };
+
+  const writeImage = {
+    left: 40,
+    top: 85,
+  };
+
   return (
     <View>
       <View style={styles.container}>
-        <View style={styles.Text1Container}>
-          <Text style={styles.Text1}>Power Moms</Text>
-          <Image source={ImagePath.formkit} style={styles.imageformkit} />
+        <View style={styles.TopContainer}>
+          <Text style={styles.momText}>Power Moms</Text>
+          <TouchableOpacity onPress={toggleModal}>
+            <Image source={ImagePath.formkit} style={styles.imageformkit} />
+          </TouchableOpacity>
+          {isModalVisible && (
+            <ModalComponent
+              line={ImagePath.Line}
+              write={ImagePath.About}
+              about={ImagePath.Write}
+              text1={'About Us'}
+              text2={'Write to Us'}
+              modalaboutContainer={modalaboutContainer}
+              txtStyle1={txtStyle1}
+              txtStyle2={txtStyle2}
+              modalContainer={modalContainer}
+              rectangle={rectangle}
+              toggleModal={toggleModal}
+              lineImage={lineImage}
+              aboutImage={aboutImage}
+              writeImage={writeImage}
+            />
+          )}
         </View>
-        <View style={styles.Text2Container}>
-          <Text style={styles.Text2}>Good Afternoon,</Text>
-          <Text style={styles.Text3}>Sarina!</Text>
+        <View style={styles.midContainer}>
+          <Text style={styles.greetingText}>Good Afternoon,</Text>
+          <Text style={styles.nameText}>Sarina!</Text>
         </View>
       </View>
       <Text style={styles.upcomingcontainer}>Upcoming Session</Text>
@@ -27,17 +158,62 @@ export default function HomeScreen() {
             Thursday
             <LinearGradient colors={['#333333', '#333333']}></LinearGradient>
           </Text>
+
           <View style={styles.liveTag}>
             <Image source={ImagePath.Tag} style={styles.imageTag} />
-            <Image source={ImagePath.Group} style={styles.imageGroup} />
+            <TouchableOpacity onPress={toggleGroupModal}>
+              <Image source={ImagePath.Group} style={styles.imageGroup} />
+            </TouchableOpacity>
+            {isGroupModalVisible && (
+              <ModalComponent
+                text3={'Thursday-Upcoming Session'}
+                text4={
+                  'The session link appears here 15 minutes before the session starts. Meanwhile, fill out the Mood Questionnaire and get your Mental Wellness Score now.'
+                }
+                txtStyle3={txtStyle3}
+                txtStyle4={txtStyle4}
+                bgTxt={bgTxt}
+                contentTxt={contentTxt}
+                toggleModal={toggleGroupModal}
+                modalContainer={modalContainer}
+                bigRectangle={bigRectangle}
+                line={ImagePath.Line}
+                lineImage={lineImage}
+                letsButton={true}
+                letsButtonStyle={{top: 80, left: 0}}
+              />
+            )}
           </View>
+        </View>
+        <View style={styles.bgdate}>
           <Text style={styles.bgText2}>
             Oct 7th, 2023, 10:00 pm ET
             <LinearGradient colors={['#333333', '#333334']}></LinearGradient>
           </Text>
           <Text style={styles.bgText3}>6 going</Text>
+          <View style={styles.profiles}>
+            <Image
+              source={ImagePath.One}
+              style={[styles.images, styles.bottomImage]}
+            />
+            <Image
+              source={ImagePath.Two}
+              style={[styles.images, styles.secondImage]}
+            />
+            <Image
+              source={ImagePath.Three}
+              style={[styles.images, styles.thirdImage]}
+            />
+            <Image
+              source={ImagePath.Four}
+              style={[styles.images, styles.topImage]}
+            />
+          </View>
+
           <Text style={styles.bgText4}>By Aimée Williams</Text>
+          <Image source={ImagePath.lady} style={styles.lady} />
         </View>
+
         <View style={styles.btnContainer}>
           <Btn
             label="Add to Calendar"
@@ -65,7 +241,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 30,
   },
 
-  Text1Container: {
+  TopContainer: {
     flex: 0,
     display: 'flex',
     flexDirection: 'row',
@@ -77,33 +253,33 @@ const styles = StyleSheet.create({
     left: 15,
   },
 
-  Text1: {
+  momText: {
     color: '#FFFFFF',
     fontSize: 20,
     fontFamily: 'inter',
     fontWeight: '800',
   },
   imageformkit: {
-    left: 228
-
+    left: 228,
+    height: 30,
+    width: 30,
   },
 
-
-  Text2Container: {
+  midContainer: {
     width: 250,
     height: 48,
     top: 60,
     left: 15,
   },
 
-  Text2: {
+  greetingText: {
     color: '#FFFFFF',
     fontSize: 28,
     fontFamily: 'Alegreya',
     fontWeight: '650',
   },
 
-  Text3: {
+  nameText: {
     color: '#FFFFFF',
     fontSize: 30,
     fontFamily: 'Alegreya',
@@ -122,20 +298,20 @@ const styles = StyleSheet.create({
 
   bgRectangle: {
     width: 375,
-    height: 254,
+    height: 274,
     backgroundColor: '#FEF3E7',
     borderRadius: 20,
     marginLeft: 19,
     bottom: 189,
   },
   bgText: {
-    height: 190,
+    height: 130,
     width: 360,
   },
   bgText1: {
     Font: 'Inter',
     fontWeight: '500',
-    fontSize: 35,
+    fontSize: 32,
     lineHeight: 36,
     letterSpacing: 2,
     left: 15,
@@ -143,8 +319,10 @@ const styles = StyleSheet.create({
   },
 
   imageTag: {
-    left: 185,
+    left: 180,
     bottom: 8,
+    height: 25,
+    width: 70,
   },
 
   liveTag: {
@@ -154,15 +332,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   imageGroup: {
-    bottom: 8,
-    right: 10,
+    bottom: 20,
+    height: 25,
+    width: 25,
   },
   bgText2: {
     Font: 'Inter',
     fontWeight: '500',
     fontSize: 16,
     left: 19,
-    bottom: 65,
+    bottom: 60,
   },
   bgText3: {
     Font: 'Inter',
@@ -171,7 +350,7 @@ const styles = StyleSheet.create({
     lineHeight: 15,
     color: '#000000',
     left: 21,
-    bottom: 50,
+    bottom: 40,
   },
   bgText4: {
     Font: 'Inter',
@@ -180,7 +359,7 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     color: '#333333',
     left: 21,
-    bottom: 30,
+    bottom: 20,
   },
   btnContainer: {
     flex: 1,
@@ -189,5 +368,45 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     right: 135,
     bottom: 25,
+  },
+
+  lady: {
+    position: 'absolute',
+    bottom: 25,
+    right: 10,
+    width: 100,
+    height: 100,
+  },
+
+  profiles: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 60,
+    right: 210,
+  },
+  images: {
+    position: 'relative',
+    resizeMode: 'cover',
+    height: 25,
+    width: 20,
+  },
+
+  bottomImage: {
+    zIndex: 1,
+  },
+  secondImage: {
+    zIndex: 2,
+  },
+  thirdImage: {
+    zIndex: 3,
+  },
+  topImage: {
+    zIndex: 4,
+  },
+  icons: {
+    width: 30,
+    height: 30,
   },
 });

@@ -14,7 +14,7 @@ export default function Btn({onPress, label, backgroundColor, textColor}) {
 const styles = StyleSheet.create({
   buttonContainer: {
     width: 165,
-    height: 40,
+    height: 45,
     position: 'relative',
     left: 135,
     justifyContent: 'center',
